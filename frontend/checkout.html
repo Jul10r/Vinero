@@ -1,0 +1,284 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinero - Checkout</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header class="main-header">
+        <nav class="top-nav">
+            <img src="{% static 'img/logo.png' %}" alt="Vinero" class="logo">
+            <div class="hamburger" id="hamburger">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a href="/">Kryefaqja</a>
+                <a href="/products/">Produktet</a>
+                <a href="/rreth-nesh/">Rreth Nesh</a>
+                <a id="kontaktoBtn">Na Kontakto</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="checkout-container">
+        <div class="checkout-header">
+            <h1>Përfundo Porosinë Tënde</h1>
+            <p class="subtitle">Përvojë e shpejtë dhe e sigurt për blerje</p>
+        </div>
+
+        <div class="checkout-grid">
+            <div class="order-summary">
+                <h2>Përmbledhje e Porosisë</h2>
+                
+                <div class="product-card">
+                    {% if product %}
+                    <img id="checkout-product-image" src="/media/{{ product.image }}" alt="{{ product.name }}">
+                    <div class="product-details">
+                        <h3 id="checkout-product-name">{{ product.name }}</h3>
+                        <p id="checkout-product-description">{{ product.description|truncatechars:80 }}</p>
+                        <div class="price-quantity">
+                            <span class="price" id="checkout-product-price">€{{ product.price|floatformat:2 }}</span>
+                            <div class="quantity-selector">
+                                <button class="quantity-btn minus">-</button>
+                                <span class="quantity">1</span>
+                                <button class="quantity-btn plus">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <img id="checkout-product-image" src="" alt="Product Image">
+                    <div class="product-details">
+                        <h3 id="checkout-product-name">Emri i Produktit</h3>
+                        <p id="checkout-product-description">Përshkrimi i shkurtër i produktit...</p>
+                        <div class="price-quantity">
+                            <span class="price" id="checkout-product-price">€0.00</span>
+                            <div class="quantity-selector">
+                                <button class="quantity-btn minus">-</button>
+                                <span class="quantity">1</span>
+                                <button class="quantity-btn plus">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="order-totals">
+                    <div class="total-row">
+                        <span>Nëntotali:</span>
+                        <span id="subtotal">€0.00</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Transporti:</span>
+                        <span>€5.00</span>
+                    </div>
+                    <div class="total-row grand-total">
+                        <span>Totali:</span>
+                        <span id="grand-total">€0.00</span>
+                    </div>
+                </div>
+
+                <div class="delivery-info">
+                    <i class="fas fa-truck"></i>
+                    <p>Porosia juaj do të dorëzohet brenda 24-48 orëve në të gjithë Shqipërinë!</p>
+                </div>
+            </div>
+
+            <div class="checkout-form">
+                <h2>Detajet e Porosisë</h2>
+                <form id="payment-form" action="/porosi/" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="full-name">Emri i Plotë</label>
+                        <input type="text" id="full-name" name="full-name" required placeholder="Shkruaj emrin tënd">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="adresa@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Numri i Telefonit</label>
+                            <input type="tel" id="phone" name="phone" required placeholder="+355 6X XXX XXXX">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Adresa e Plotë</label>
+                        <textarea id="address" name="address" rows="3" required placeholder="Rruga, Apartamenti..."></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">Qyteti</label>
+                            <input type="text" id="city" name="city" required placeholder="Shkruaj qytetin">
+                        </div>
+                        <div class="form-group">
+                            <label for="postal-code">Kodi Postar</label>
+                            <input type="text" id="postal-code" name="postal-code" placeholder="Kodi postar">
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="emri_produktit" id="hidden-product-name" value="{% if product %}{{ product.name }}{% endif %}">
+                    <input type="hidden" name="cmimi_total" id="hidden-total-price" value="{% if product %}{{ product.price|floatformat:2 }}{% endif %}">
+                    <button type="submit" class="submit-order">Konfirmo Porosinë</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="{% static 'img/logo-black.png' %}" alt="Vinero" class="logo">
+                <p>"Arti i Verës, Shija e Tokës"</p>
+            </div>
+            
+            <div class="footer-links">
+                <div class="link-column">
+                    <h4>Shfletoni</h4>
+                    <a href="/">Kryefaqja</a>
+                    <a href="/products/">Produktet</a>
+                    <a href="/rreth-nesh/">Rreth Nesh</a>
+                    <a id="kontaktoBtn">Na Kontakto</a>
+                </div>
+                
+                <div class="link-column">
+                    <h4>Ligjore</h4>
+                    <a href="#">Terma & Kushte</a>
+                    <a href="#">Politika e Privatësisë</a>
+                    <a href="#">Cookies</a>
+                </div>
+                
+                <div class="link-column">
+                    <h4>Na Kontaktoni</h4>
+                    <p>info@vinero.com</p>
+                    <p>+355 69 123 4567</p>
+                    <p>Rruga e Vreshtave, Tirana</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="social-icons">
+                <a href="#"><img src="{% static 'img/sm/fb.png' %}"></a>
+                <a href="#"><img src="{% static 'img/sm/ig.png' %}"></a>
+                <a href="#"><img src="{% static 'img/sm/x.png' %}"></a>
+            </div>
+            <p>© 2025 Vinero. Të gjitha të drejtat e rezervuara.</p>
+        </div>
+    </footer>
+
+    <div id="kontaktoModal" class="modal2">
+        <div class="modal2-content">
+            <span class="close">&times;</span>
+            <h2>Na Kontaktoni</h2>
+            <div class="kontakto-info">
+                <div class="info-item">
+                    <i class="fas fa-phone"></i>
+                    <p>+355 12 345 6789</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <p>info@vinero.com</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>Rruga e Vreshtave 123, Tirana, Shqipëri</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        document.addEventListener('DOMContentLoaded', () => {
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                hamburger.classList.toggle('active');
+            });
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    hamburger.classList.remove('active');
+                });
+            });
+
+            let quantity = 1;
+            let productPrice = parseFloat(document.getElementById('checkout-product-price').textContent.replace('€','')) || 0;
+            updateTotals(quantity, productPrice);
+
+            // Quantity + -
+            const minusBtn = document.querySelector('.quantity-btn.minus');
+            const plusBtn = document.querySelector('.quantity-btn.plus');
+            const quantityDisplay = document.querySelector('.quantity');
+            minusBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (quantity > 1) {
+                    quantity--;
+                    quantityDisplay.textContent = quantity;
+                    updateTotals(quantity, productPrice);
+                }
+            });
+            plusBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                quantity++;
+                quantityDisplay.textContent = quantity;
+                updateTotals(quantity, productPrice);
+            });
+
+            // Form submission
+            const form = document.getElementById('payment-form');
+            form.addEventListener('submit', function(e) {
+                // Rifresko vlerat para submit
+                const prodName = document.getElementById('checkout-product-name').textContent;
+                if (!prodName || prodName.trim() === '' || prodName === 'Produkt i panjohur') {
+                    e.preventDefault();
+                    alert('Nuk është zgjedhur asnjë produkt!');
+                    return false;
+                }
+                document.getElementById('hidden-product-name').value = prodName;
+                document.getElementById('hidden-total-price').value = parseFloat(document.getElementById('grand-total').textContent.replace('€',''));
+            });
+        });
+
+        function updateTotals(quantity, unitPrice) {
+            const subtotal = quantity * unitPrice;
+            const shipping = 5.00;
+            const grandTotal = subtotal + shipping;
+            document.getElementById('subtotal').textContent = `€${subtotal.toFixed(2)}`;
+            document.getElementById('grand-total').textContent = `€${grandTotal.toFixed(2)}`;
+        }
+
+
+        const modal2 = document.getElementById("kontaktoModal");
+        const btn = document.getElementById("kontaktoBtn");
+        const span = document.getElementsByClassName("close")[0];
+
+        btn.onclick = function() {
+            modal2.style.display = "flex";
+        }
+
+        span.onclick = function() {
+            modal2.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal2) {
+                modal2.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

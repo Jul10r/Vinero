@@ -1,0 +1,294 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinero - Our Wine Collection</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/products.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header class="main-header">
+        <nav class="top-nav">
+            <img src="{% static 'img/logo.png' %}" alt="Vinero" class="logo">
+            <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="navLinks" type="button">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <div class="nav-links" id="navLinks">
+                <a href="/">Kryefaqja</a>
+                <a href="/rreth-nesh/">Rreth Nesh</a>
+                <a href="/events/">Eventet</a>
+                <a id="kontaktoBtn">Na Kontakto</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="products-header">
+        <div class="header-content">
+            <h1>Our Exquisite Wine Collection</h1>
+            <p>Zbulo harmoninë e përsosur të traditës dhe inovacionit në çdo shishe.</p>
+        </div>
+    </section>
+
+    <div class="search-container">
+        <div class="search-bar">
+            <input type="text" placeholder="Gjej shijen që kërkon...">
+            <button type="submit"><i class="fas fa-search search-icon"></i></button>
+        </div>
+    </div>
+
+    <div class="category-tabs">
+        {% for category in categories %}
+            <div class="tab{% if forloop.first %} active{% endif %}" data-tab="category-{{ category.id }}">{{ category.name }}</div>
+        {% endfor %}
+    </div>
+
+    {% for category in categories %}
+        <section id="category-{{ category.id }}" class="wine-category{% if forloop.first %} active{% endif %}">
+            <div class="wine-grid">
+                {% for product in category.products.all %}
+                    <div class="wine-card">
+                        <div class="wine-image">
+                            <img src="/media/{{ product.image }}" alt="{{ product.name }}">
+                        </div>
+                        <div class="wine-details">
+                            <h3>{{ product.name }}</h3>
+                            <div class="wine-meta">
+                                <span>{{ product.vintage }} Vintage</span>
+                                <span>{{ product.origin }}</span>
+                            </div>
+                            <p class="wine-description">{{ product.description|truncatechars:80 }}</p>
+                            <span class="wine-price">€{{ product.price|floatformat:2 }}</span>
+                            <button class="details-button" 
+                                data-id="{{ product.id }}"
+                                data-name="{{ product.name|escapejs }}"
+                                data-description="{{ product.description|escapejs }}"
+                                data-image="/media/{{ product.image }}"
+                                data-price="{{ product.price|floatformat:2 }}"
+                                data-vintage="{{ product.vintage|default_if_none:'' }}"
+                                data-origin="{{ product.origin|default_if_none:'' }}"
+                            >Shiko më shumë</button>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>Nuk ka produkte në këtë kategori.</p>
+                {% endfor %}
+            </div>
+        </section>
+    {% endfor %}
+
+    <!---------- Wine Modal ---------->
+    <div id="wine-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img id="modal-wine-image" src="" alt="">
+                <h2 id="modal-wine-name"></h2>
+                <div id="modal-wine-meta"></div>
+                <p id="modal-wine-description"></p>
+                <span id="modal-wine-price" class="wine-price"></span>
+                <br>
+                <button id="buy-now-btn" class="buy-now-btn">Bli tani</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="{% static 'img/logo-black.png' %}" alt="Vinero" class="logo">
+                <p>"Arti i Verës, Shija e Tokës"</p>
+            </div>
+            
+            <div class="footer-links">
+                <div class="link-column">
+                    <h4>Shfletoni</h4>
+                    <a href="/">Kryefaqja</a>
+                    <a href="/rreth-nesh/">Rreth Nesh</a>
+                    <a href="/events/">Eventet</a>
+                    <a id="kontaktoBtn">Na Kontakto</a>
+                </div>
+                
+                <div class="link-column">
+                    <h4>Legal</h4>
+                    <a href="#">Terma & Kushte</a>
+                    <a href="#">Politika e Privatësisë</a>
+                    <a href="#">Cookies</a>
+                </div>
+                
+                <div class="link-column">
+                    <h4>Na Kontaktoni</h4>
+                    <p>info@vinero.com</p>
+                    <p>+355 69 123 4567</p>
+                    <p>Rruga e Vreshtave, Tirana</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="social-icons">
+                <a href="#"><img src="{% static 'img/sm/fb.png' %}"></a>
+                <a href="#"><img src="{% static 'img/sm/ig.png' %}"></a>
+                <a href="#"><img src="{% static 'img/sm/x.png' %}"></a>
+            </div>
+            <p>© 2025 Vinero. Të gjitha të drejtat e rezervuara.</p>
+        </div>
+    </footer>
+
+    <div id="kontaktoModal" class="modal2">
+        <div class="modal2-content">
+            <span class="close">&times;</span>
+            <h2>Na Kontaktoni</h2>
+            <div class="kontakto-info">
+                <div class="info-item">
+                    <i class="fas fa-phone"></i>
+                    <p>+355 12 345 6789</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <p>info@vinero.com</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>Rruga e Vreshtave 123, Tirana, Shqipëri</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        // Hamburger menu toggle
+        hamburger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            document.body.classList.toggle('nav-open', navLinks.classList.contains('active'));
+            hamburger.setAttribute('aria-expanded', navLinks.classList.contains('active'));
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (navLinks.classList.contains('active') && !navLinks.contains(e.target) && e.target !== hamburger) {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+                document.body.classList.remove('nav-open');
+                hamburger.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+                document.body.classList.remove('nav-open');
+                hamburger.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        // Category tabs
+        var tabs = document.querySelectorAll('.tab');
+        var wineCategories = document.querySelectorAll('.wine-category');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                wineCategories.forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                var section = document.getElementById(tab.dataset.tab);
+                if (section) {
+                    section.classList.add('active');
+                }
+            });
+        });
+
+        // Search functionality
+        var searchInput = document.querySelector('.search-bar input');
+        searchInput.addEventListener('input', function() {
+            var searchTerm = searchInput.value.toLowerCase();
+            document.querySelectorAll('.wine-card').forEach(function(card) {
+                var name = card.querySelector('h3').textContent.toLowerCase();
+                var desc = card.querySelector('p').textContent.toLowerCase();
+                if (!name.includes(searchTerm) && !desc.includes(searchTerm)) {
+                    card.style.display = 'none';
+                } else {
+                    card.style.display = '';
+                }
+            });
+        });
+
+        // Modal functionality
+        const modal = document.getElementById('wine-modal');
+        const closeModalBtn = modal.querySelector('.close-modal');
+        const buyNowBtn = document.getElementById('buy-now-btn');
+        const modalWineImage = document.getElementById('modal-wine-image');
+        const modalWineName = document.getElementById('modal-wine-name');
+        const modalWineMeta = document.getElementById('modal-wine-meta');
+        const modalWineDescription = document.getElementById('modal-wine-description');
+        const modalWinePrice = document.getElementById('modal-wine-price');
+        let currentProductId = null;
+
+        document.querySelectorAll('.details-button').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                currentProductId = btn.getAttribute('data-id');
+                modalWineImage.src = btn.getAttribute('data-image');
+                modalWineImage.alt = btn.getAttribute('data-name');
+                modalWineName.textContent = btn.getAttribute('data-name');
+                var vintage = btn.getAttribute('data-vintage');
+                var origin = btn.getAttribute('data-origin');
+                modalWineMeta.innerHTML = vintage + ' Vintage' + ' | ' + origin;
+                modalWineDescription.textContent = btn.getAttribute('data-description');
+                modalWinePrice.textContent = '€' + btn.getAttribute('data-price');
+                buyNowBtn.onclick = function() {
+                    var params = new URLSearchParams({
+                        product_id: currentProductId
+                    });
+                    window.location.href = '/checkout.html?' + params.toString();
+                };
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        closeModalBtn.onclick = function() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+        modal.onclick = function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        };
+
+        const modal2 = document.getElementById("kontaktoModal");
+        const btn = document.getElementById("kontaktoBtn");
+        const span = document.getElementsByClassName("close")[0];
+
+        btn.onclick = function() {
+            modal2.style.display = "flex";
+        }
+
+        span.onclick = function() {
+            modal2.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal2) {
+                modal2.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

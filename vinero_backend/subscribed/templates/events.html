@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinero - Eventet</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/events.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header class="main-header">
+        <nav class="top-nav">
+            <img src="/img/logo.png" alt="Vinero" class="logo">
+            <div class="hamburger" id="hamburger">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a href="/">Kryefaqja</a>
+                <a href="/products/">Produktet</a>
+                <a href="/rreth-nesh/">Rreth Nesh</a>
+                <a id="kontaktoBtn">Na Kontakto</a>
+            </div>
+        </nav>
+        
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1>Evente Ekskluzive</h1>
+                <p class="subtitle">Përvoja e Verës në Çdo Ngjarje</p>
+            </div>
+        </div>
+
+    </header>
+
+    <section class="events-container">
+        <h2 class="section-title">Kujtime mes Gotash</h2>
+        <p class="section-subtitle">Evente të dizajnuara për të ndjerë, shijuar dhe kujtuar.</p>
+
+        <div class="events-list">
+            <div class="event-card">
+                <div class="event-date">
+                    <span class="day">05</span>
+                    <span class="month">Gusht</span>
+                </div>
+                <div class="event-content">
+                    <h3>Shijime Verash Premium</h3>
+                    <div class="event-meta">
+                        <span><i class="fas fa-clock"></i> 18:00 - 21:00</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Kantina Vinero, Tiranë</span>
+                    </div>
+                    <div class="event-description">
+                        <p>Një mbrëmje ekskluzive ku do të shijoni 6 verëra premium të përzgjedhura nga koleksioni ynë. Do të mësoni:</p>
+                        <ul>
+                            <li>Teknikat e shijimit profesional</li>
+                            <li>Sekrete nga mjeshtëria e krijimit të një vere me karakter</li>
+                            <li>Historinë e verërave të zgjedhura</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-date">
+                    <span class="day">22</span>
+                    <span class="month">Korrik</span>
+                </div>
+                <div class="event-content">
+                    <h3>Turne në Vreshta</h3>
+                    <div class="event-meta">
+                        <span><i class="fas fa-clock"></i> 10:00 - 13:00</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Vreshtat Vinero, Berat</span>
+                    </div>
+                    <div class="event-description">
+                        <p>Eksploroni vreshtat tona historike në Berat me udhëheqje të ekspertëve tanë:</p>
+                        <ul>
+                            <li>Shikoni procesin e prodhimit nga rrushi në shishe</li>
+                            <li>Vizitoni bodrumet e plota me fuçi druri</li>
+                            <li>Shijoni verërat tona direkt nga fuçia</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="event-card past-event">
+                <div class="event-date">
+                    <span class="day">15</span>
+                    <span class="month">Maj</span>
+                </div>
+                <div class="event-content">
+                    <h3>Nata e Verës 2025</h3>
+                    <div class="event-meta">
+                        <span><i class="fas fa-check-circle"></i> Përfunduar me sukses</span>
+                        <span>+120 pjesëmarrës</span>
+                    </div>
+                    <div class="event-description">
+                        <p>Një nga eventet më të suksesshme të vitit me 12 stacione shijimi dhe muzikë të gjallë. Pjesëmarrët shijuan:</p>
+                        <ul>
+                            <li>Koleksione të veçanta të vitit 2018</li>
+                            <li>Shijime me djathëra lokale</li>
+                            <li>Demonstrime nga ekspertë të ftuar</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+        
+        
+    <section class="newsletter">
+        <div class="newsletter-content">
+            <h3>Regjistrohu për Njoftimet</h3>
+            <p>Prano njoftime për evente të reja ose oferta speciale</p>
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <form class="newsletter-form" method="POST" action="{% url 'events' %}">
+                {% csrf_token %}
+                <input type="email" name="email" placeholder="Emaili juaj" required>
+                <button type="submit">Regjistrohu</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="/img/logo-black.png" alt="Vinero" class="logo">
+                <p>"Arti i Verës, Shija e Tokës"</p>
+            </div>
+            
+            <div class="footer-links">
+                <div class="link-column">
+                    <h4>Shfletoni</h4>
+                    <a href="/">Kryefaqja</a>
+                    <a href="/products/">Produktet</a>
+                    <a href="/rreth-nesh/">Rreth Nesh</a>
+                    <a id="kontaktoBtn">Na Kontakto</a>
+                </div>
+                
+                <div class="link-column">
+                    <h4>Legal</h4>
+                    <a href="#">Terma & Kushte</a>
+                    <a href="#">Politika e Privatësisë</a>
+                    <a href="#">Cookies</a>
+                </div>
+                
+                <div class="link-column">
+                    <h4>Na Kontaktoni</h4>
+                    <p>info@vinero.com</p>
+                    <p>+355 69 123 4567</p>
+                    <p>Rruga e Vreshtave, Tirana</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="social-icons">
+                <a href="#"><img src="/img/sm/fb.png"></a>
+                <a href="#"><img src="/img/sm/ig.png"></a>
+                <a href="#"><img src="/img/sm/x.png"></a>
+            </div>
+            <p>© 2025 Vinero. Të gjitha të drejtat e rezervuara.</p>
+        </div>
+    </footer>
+
+    <div id="kontaktoModal" class="modal2">
+        <div class="modal2-content">
+            <span class="close">&times;</span>
+            <h2>Na Kontaktoni</h2>
+            <div class="kontakto-info">
+                <div class="info-item">
+                    <i class="fas fa-phone"></i>
+                    <p>+355 12 345 6789</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <p>info@vinero.com</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>Rruga e Vreshtave 123, Tirana, Shqipëri</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        function toggleBodyScroll(disable) {
+            if (disable) {
+                document.body.style.overflow = 'hidden';
+                document.body.style.position = 'fixed';
+                document.body.style.width = '100%';
+            } else {
+                document.body.style.overflow = '';
+                document.body.style.position = '';
+                document.body.style.width = '';
+            }
+        }
+
+        // Hamburger menu toggle
+        hamburger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            toggleBodyScroll(navLinks.classList.contains('active'));
+            hamburger.setAttribute('aria-expanded', navLinks.classList.contains('active'));
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (navLinks.classList.contains('active') && !navLinks.contains(e.target) && e.target !== hamburger) {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+                toggleBodyScroll(false);
+                hamburger.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+                toggleBodyScroll(false);
+                hamburger.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        const modal2 = document.getElementById("kontaktoModal");
+        const btn = document.getElementById("kontaktoBtn");
+        const span = document.getElementsByClassName("close")[0];
+
+        btn.onclick = function() {
+            modal2.style.display = "flex";
+        }
+
+        span.onclick = function() {
+            modal2.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal2) {
+                modal2.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

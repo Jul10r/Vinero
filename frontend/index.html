@@ -1,0 +1,250 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinero - Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header class="main-header">
+        <nav class="top-nav">
+            <img src="{% static 'img/logo.png' %}" alt="Vinero" class="logo">
+            <div class="hamburger" id="hamburger">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a href="/products/" target="_blank">Produktet</a>
+                <a href="/rreth-nesh/" target="_blank">Rreth Nesh</a>
+                <a href="/events/" target="_blank">Eventet</a>
+                <a id="kontaktoBtn">Na Kontakto</a>
+            </div>
+        </nav>
+        
+        <div class="hero">
+            <div class="hero-content">
+                <h1>Vinero</h1>
+                <p class="tagline">"Arti i Verës, Shija e Tokës"</p>
+                <a href="/products/" class="cta-button" target="_blank">Koleksioni i Vinero</a>
+            </div>
+            <div class="hero-image">
+                <img src="{% static 'img/header1.png' %}">
+            </div>
+        </div>
+        <div class="custom-shape-divider-bottom-1750672740">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
+        </div>
+    </header>
+
+    <section class="vinero-section">
+
+        <div class="section-content">
+            <h1>Çfarë është Vinero</h1>
+            <p class="intro-text">Vinero është më shumë se një kantinë – është një përvojë. Me rrënjë të thella në traditën shqiptare dhe një sy drejt elegancës moderne, ne sjellim verëra që flasin me shije, aromë dhe pasion. Çdo gotë është një tregim – i tokës, i përkushtimit dhe i artit të verës.</p>
+            
+            <div class="image-text-container">
+                <div class="image-pair">
+                    <img class="s2-image" src="{% static 'img/sec2.jpg' %}" alt="Vreshta Vinero">
+                </div>
+                <p class="detailed-text">Vinero është një histori e rrëfyer përmes shijes – një udhëtim nëpër rrënjë, dritë dielli dhe përkushtim. <br><br>Është një vend ku vera nuk është vetëm pije, por kulturë, art dhe lidhje. Qoftë një gotë në fund të ditës, një dhuratë për një mik, apo një vizitë në kantinë. <br><br> <span id="thenie">"Vinero është zgjedhja për ata që e vlerësojnë shijen e vërtetë."</span></p>
+            </div>
+        </div>
+
+        <div class="custom-shape-divider-bottom-1750672834">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
+        </div>
+    </section>
+
+    <section class="produktet-section" id="produktet">
+
+        <div class="section-content">
+            <h1>Produktet Tona</h1>
+            <p class="section-intro">Eksploroni koleksionin tonë të përzgjedhur me kujdes, ku çdo shishe përmban aromën dhe karakterin e tokës shqiptare.</p>
+            
+            <div class="produktet-grid" id="produktetGrid">
+                {% if products %}
+                    {% for product in products %}
+                        <div class="produkt-card">
+                            <img src="/media/{{ product.image }}" alt="{{ product.name }}">
+                            <h3>{{ product.name }}</h3>
+                            <p>{{ product.description|truncatechars:80 }}</p>
+                            <span class="price">€{{ product.price|floatformat:2 }}</span>
+                            <a href="/checkout.html?product_id={{ product.id }}" class="cta-button" id="button11">Bli tani</a>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>Nuk ka produkte për momentin.</p>
+                {% endif %}
+            </div>
+            <div class="view-all-container">
+                <a href="/products/" class="view-all-button" target="_blank">Shiko të gjithë koleksionin</a>
+            </div>
+        </div>
+
+        <div class="custom-shape-divider-bottom-1750672963">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
+        </div>
+    </section>
+
+    <section class="experience-section">
+
+        <div class="section-content">
+            <h1>Përvoja Vinero</h1>
+            <p class="section-intro">Bashkohuni me ne në një udhëtim sensorial përmes botës së verës, ku çdo shijim është një histori.</p>
+            
+            <div class="experience-cards">
+                <div class="experience-card">
+                    <div class="card-icon"><img class="imgg" src="{% static 'img/grapes.png' %}" alt=""></div>
+                    <h3>Udhëtime në Vreshta</h3>
+                    <p>Vizitoni vreshtat tona dhe shikoni nga afër procesin e prodhimit të verës, nga rrushi deri në shishe.</p>
+                </div>
+                
+                <div class="experience-card">
+                    <div class="card-icon"><img class="imgg" src="{% static 'img/wine.png' %}" alt=""></div>
+                    <h3>Seanca Shijimi</h3>
+                    <p>Mësoni artin e shijimit të verës nga ekspertët tanë dhe zbuloni sekretet e aromave dhe shijev.</p>
+                </div>
+                
+                <div class="experience-card">
+                    <div class="card-icon"><img class="imgg" src="{% static 'img/bar.png' %}" alt=""></div>
+                    <h3>Workshop Arti</h3>
+                    <p>Kombinoni artin dhe verën në workshopet tona unike, ku kreativiteti ndërpritet nga shijime të zgjedhura.</p>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <footer class="main-footer">
+        <div class="custom-shape-divider-top-1750674173">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
+        </div>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="{% static 'img/logo-black.png' %}" alt="Vinero" class="logo">
+                <p>"Arti i Verës, Shija e Tokës"</p>
+            </div>
+            
+            <div class="footer-links">
+                <div class="link-column">
+                    <h4>Shfletoni</h4>
+                    <a href="/products/" target="_blank">Produktet</a>
+                    <a href="/rreth-nesh/" target="_blank">Rreth Nesh</a>
+                    <a href="/events/" target="_blank">Eventet</a>
+                    <a id="kontaktoBtn">Na Kontakto</a>
+                </div>
+                
+                <div class="link-column">
+                    <h4>Legal</h4>
+                    <a href="#">Terma & Kushte</a>
+                    <a href="#">Politika e Privatësisë</a>
+                    <a href="#">Cookies</a>
+                </div>
+                
+                <div class="link-column">
+                    <h4>Na Kontaktoni</h4>
+                    <p>info@vinero.com</p>
+                    <p>+355 69 123 4567</p>
+                    <p>Rruga e Vreshtave, Tirana</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="social-icons">
+                <a href="#"><img src="{% static 'img/sm/fb.png' %}"></a>
+                <a href="#"><img src="{% static 'img/sm/ig.png' %}"></a>
+                <a href="#"><img src="{% static 'img/sm/x.png' %}"></a>
+            </div>
+            <p>© 2025 Vinero. Të gjitha të drejtat e rezervuara.</p>
+        </div>
+    </footer>
+
+    <div id="kontaktoModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Na Kontaktoni</h2>
+            <div class="kontakto-info">
+                <div class="info-item">
+                    <i class="fas fa-phone"></i>
+                    <p>+355 12 345 6789</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <p>info@vinero.com</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>Rruga e Vreshtave 123, Tirana, Shqipëri</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('navLinks');
+            
+            hamburger.addEventListener('click', function() {
+                hamburger.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+
+            document.addEventListener('click', function(e) {
+                if (navLinks.classList.contains('active') && !navLinks.contains(e.target) && e.target !== hamburger) {
+                    navLinks.classList.remove('active');
+                    hamburger.classList.remove('active');
+                    document.body.classList.remove('nav-open');
+                    hamburger.setAttribute('aria-expanded', 'false');
+                }
+            });
+            
+            // Close menu when clicking on a link
+            const navItems = navLinks.querySelectorAll('a');
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('active');
+                });
+            });
+        });
+
+
+
+        const modal = document.getElementById("kontaktoModal");
+        const btn = document.getElementById("kontaktoBtn");
+        const span = document.getElementsByClassName("close")[0];
+
+        btn.onclick = function() {
+            modal.style.display = "flex";
+        }
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>
