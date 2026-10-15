@@ -1,8 +1,6 @@
 # Vinero
 
-Vinero is a Django-powered wine storefront prototype. It brings together a responsive, Albanian-language storefront with product listings, winery information, events, and a basic order-submission flow.
-
-> **Project status:** This is a portfolio/demo project, not a production-ready online shop.
+Vinero is a Django-powered wine website. It brings together a responsive, Albanian-language storefront with product listings, winery information, events, and an order-submission flow.
 
 ## Features
 
