@@ -73,6 +73,14 @@ If you do not want to activate the virtual environment, run Django directly with
 | Checkout | <http://127.0.0.1:8000/checkout.html> |
 | Django Admin | <http://127.0.0.1:8000/admin/> |
 
+## Screenshots
+
+| Home | Products |
+| --- | --- |
+| ![Vinero homepage](screenshots/home.png) | ![Product catalogue](screenshots/products.png) |
+| ![About Vinero](screenshots/about.png)<br>About | ![Vinero events](screenshots/events.png)<br>Events |
+| ![Django Admin with order details redacted](screenshots/admin-orders.png)<br>Django Admin (order data redacted) | |
+
 To sign in to Django Admin, create a local administrator account:
 
 ```powershell
